@@ -6,15 +6,17 @@ dotenv.config()
 
 //secret 
 // eslint-disable-next-line no-undef
-const secretKC = process.env.CLIENT_SECRET_K || null
+const secretKC = process.env.CLIENT_SECRET_K || "sin_secreto"
 // eslint-disable-next-line no-undef
 const appPort = process.env.PORT || 3000
+// eslint-disable-next-line no-undef
+const expressSecret = process.env.SESSION_SECRET || "sin_secreto"
 
 const app = express()
 
 const memoryStore = new session.MemoryStore()
 app.use(
-    session({secret: secretKC,
+    session({secret: expressSecret,
         resave: false,
         saveUninitialized: true,
         store: memoryStore
@@ -34,7 +36,7 @@ const keycloaki = new Keycloak(
     resource: process.env.KEYCLOAK_CLIENT,
     credentials: {
     // eslint-disable-next-line no-undef
-      secret: process.env.KEYCLOAK_SECRET
+      secret: secretKC
     },
     "confidential-port": 0
   }
