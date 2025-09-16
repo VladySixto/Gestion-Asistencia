@@ -35,7 +35,6 @@ const keycloaki = new Keycloak(
     // eslint-disable-next-line no-undef
     resource: process.env.KEYCLOAK_CLIENT,
     credentials: {
-    // eslint-disable-next-line no-undef
       secret: secretKC
     },
     "confidential-port": 0
