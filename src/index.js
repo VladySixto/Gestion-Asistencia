@@ -31,7 +31,6 @@ const keycloaki = new Keycloak(
    realm: process.env.KEYCLOAK_REALM,
    // eslint-disable-next-line no-undef
     "auth-server-url": process.env.KEYCLOAK_URL,
-    "ssl-required": "external",
     // eslint-disable-next-line no-undef
     resource: process.env.KEYCLOAK_CLIENT,
     credentials: {
