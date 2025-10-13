@@ -1,7 +1,10 @@
 import express from "express"
 import session from "express-session"
 import Keycloak from "keycloak-connect"
+import { initModels } from './models/init.models.js';
+import { sequelize } from './config/database/dbconfig.js';
 import dotenv from "dotenv"
+import { swaggerDocs } from "./swagger.js";
 dotenv.config()
 
 //secret 
@@ -23,6 +26,21 @@ app.use(
     })
 )
 
+async function main() {
+    try {
+        await sequelize.authenticate();
+        initModels();
+        await sequelize.sync();
+        app.listen(appPort, () => {
+            console.log(`Servidor escuchando en el puerto ${appPort}`);
+            swaggerDocs(app, appPort);
+        });
+    } catch (error) {
+        console.error("error al iniciar Sequelize (DB)", error);
+    }
+}
+
+main();
 
 const keycloaki = new Keycloak(
   { store: memoryStore },
