@@ -1,8 +1,7 @@
 import express from "express"
 import session from "express-session"
 import Keycloak from "keycloak-connect"
-import { initModels } from "./models/init.models.js"
-import { sequelize } from "./config/database/dbconfig.js"
+import { initModels, initDb, insertDevs } from "./models/init.models.js"
 import dotenv from "dotenv"
 import { swaggerDocs } from "./swagger.js"
 import helmet from "helmet"
@@ -27,12 +26,15 @@ app.use(
         store: memoryStore
     })
 )
-
+//funcionamiento de sequelize
 async function main() {
     try {
-        await sequelize.authenticate()
         initModels()
-        await sequelize.sync()
+        await initDb()
+        if (process.env.APP_MODE == "dev") {
+                await insertDevs()
+        } 
+
         app.listen(appPort, () => {
             console.log(`Servidor escuchando en el puerto ${appPort}`)
             swaggerDocs(app, appPort)
@@ -41,9 +43,8 @@ async function main() {
         console.error("error al iniciar Sequelize (DB)", error)
     }
 }
-
 main()
-
+// Config keycloack con algunas variables de entorno
 const keycloaki = new Keycloak(
   { store: memoryStore },
   {
@@ -59,6 +60,7 @@ const keycloaki = new Keycloak(
     "confidential-port": 0
   }
 )
+// config de la App
 app.use(helmet())
 app.use(cors())
 app.use(keycloaki.middleware())
