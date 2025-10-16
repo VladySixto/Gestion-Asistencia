@@ -5,6 +5,8 @@ import { initModels } from "./models/init.models.js"
 import { sequelize } from "./config/database/dbconfig.js"
 import dotenv from "dotenv"
 import { swaggerDocs } from "./swagger.js"
+import helmet from "helmet"
+import cors from "cors"
 dotenv.config()
 
 //secret 
@@ -57,7 +59,8 @@ const keycloaki = new Keycloak(
     "confidential-port": 0
   }
 )
-
+app.use(helmet())
+app.use(cors())
 app.use(keycloaki.middleware())
 
 // Ruta pública
