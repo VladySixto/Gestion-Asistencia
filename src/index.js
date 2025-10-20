@@ -6,6 +6,7 @@ import dotenv from "dotenv"
 import { swaggerDocs } from "./swagger.js"
 import helmet from "helmet"
 import cors from "cors"
+import mainRouter from "./routes/index.js"
 dotenv.config()
 
 //secret 
@@ -45,7 +46,7 @@ async function main() {
 }
 main()
 // Config keycloack con algunas variables de entorno
-const keycloaki = new Keycloak(
+export const keycloaki = new Keycloak(
   { store: memoryStore },
   {
    
@@ -64,7 +65,8 @@ const keycloaki = new Keycloak(
 app.use(helmet())
 app.use(cors())
 app.use(keycloaki.middleware())
-
+app.use(express.json())
+app.use("/api/v1", mainRouter)
 // Ruta pública
 app.get("/", (req, res) => {
   res.send("🚀 Bienvenido a la app con Keycloak!")
