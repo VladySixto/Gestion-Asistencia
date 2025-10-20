@@ -1,6 +1,6 @@
 import express from "express"
 import session from "express-session"
-import Keycloak from "keycloak-connect"
+import { keycloaki, memoryStore } from "./config/keycloak.config.js"
 import { initModels, initDb, insertDevs } from "./models/init.models.js"
 import dotenv from "dotenv"
 import { swaggerDocs } from "./swagger.js"
@@ -9,17 +9,12 @@ import cors from "cors"
 import mainRouter from "./routes/index.js"
 dotenv.config()
 
-//secret 
-
-const secretKC = process.env.CLIENT_SECRET_K || "sin_secreto"
-
 const appPort = process.env.PORT || 3000
 
 const expressSecret = process.env.SESSION_SECRET || "sin_secreto"
 
 const app = express()
 
-const memoryStore = new session.MemoryStore()
 app.use(
     session({secret: expressSecret,
         resave: false,
@@ -33,7 +28,7 @@ async function main() {
         initModels()
         await initDb()
         if (process.env.APP_MODE == "dev") {
-                await insertDevs()
+            await insertDevs()
         } 
 
         app.listen(appPort, () => {
@@ -45,22 +40,7 @@ async function main() {
     }
 }
 main()
-// Config keycloack con algunas variables de entorno
-export const keycloaki = new Keycloak(
-  { store: memoryStore },
-  {
-   
-   realm: process.env.KEYCLOAK_REALM,
-   
-    "auth-server-url": process.env.KEYCLOAK_URL,
-    
-    resource: process.env.KEYCLOAK_CLIENT,
-    credentials: {
-      secret: secretKC
-    },
-    "confidential-port": 0
-  }
-)
+
 // config de la App
 app.use(helmet())
 app.use(cors())
@@ -87,8 +67,4 @@ app.get("/logout", (req, res) => {
   req.session.destroy()
   
   res.redirect(`${process.env.KEYCLOAK_URL}/realms/${process.env.KEYCLOAK_REALM}/protocol/openid-connect/logout?redirect_uri=http://localhost:${process.env.PORT}/`)
-})
-
-app.listen(appPort, () => {
-  console.log("Servidor corriendo en http://localhost:" + appPort)
 })
