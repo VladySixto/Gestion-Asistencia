@@ -1,9 +1,39 @@
 import {Patient} from "../models/patient.models.js"
+import { Op } from "sequelize"
 
-export const getPatients = async (req, res) => {
+export const getAllFPatients = async (req, res) => {
     try {
-        const patients = await Patient.findAll()
-        res.status(200).json(patients)
+        // 1. parametros de paginacion
+        const { page = 1, size = 10, name, identification } = req.query
+
+        const limit = parseInt(size)
+        const offset = (parseInt(page) - 1) * limit
+
+        // 3. Construimos la cláusula 'where' dinámicamente para los filtros.
+        const where = {}
+        if (name) {
+            where[Op.or] = [
+                { name: { [Op.iLike]: `%${name}%` } },
+                { lastname: { [Op.iLike]: `%${name}%` } }
+            ]
+        }
+        if (identification) {
+            where.identification = identification
+        }
+
+        // 4. Usamos findAndCountAll con paginación y filtros.
+        const { count, rows } = await Patient.findAndCountAll({
+            limit,
+            offset,
+            where
+        })
+
+        res.status(200).json({
+            totalItems: count,
+            totalPages: Math.ceil(count / limit),
+            currentPage: parseInt(page),
+            patients: rows
+        })
     } catch (error) {
         return res.status(500).json({message: "Internal error",error:error.message})
     }
