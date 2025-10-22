@@ -2,21 +2,25 @@ import {Patient} from "../models/patient.models.js"
 import { Op } from "sequelize"
 export const searchPatient = async(req,res) =>{
     try {
-        
-        const { id, cud, identification } = req.query
+        const { id } = req.params // El ID principal viene de la ruta
+        const { cud, identification } = req.query // Los filtros opcionales vienen de la consulta
 
-        // Construimos
+        // Construimos la cláusula de búsqueda dinámicamente
         const where = {}
-        if (id) {
-            where.id = id
-        } else if (cud) {
-            where.cud = { [Op.iLike]: `%${cud}%` }
-        } else if (identification) {
-            where.identification = { [Op.iLike]: `%${identification}%` }
-        } else {
-            return res.status(400).json({ message: "Please provide one of the following search parameters: id, cud, or identification." })
-        }
+        
+        // Priorizamos la búsqueda por el ID de la ruta
+        where.id = id
 
+        // Si se proveen otros filtros, los añadimos a una condición OR.
+        // Esto permite buscar por ID o por los otros identificadores únicos.
+        const orConditions = []
+        if (cud) orConditions.push({ cud: cud })
+        if (identification) orConditions.push({ identification: identification })
+
+        if (orConditions.length > 0) {
+            where[Op.or] = [ { id: id }, ...orConditions]
+        }
+        
         const patient = await Patient.findOne({ where })
 
         if (!patient) {
@@ -161,8 +165,17 @@ export const updatePatient = async(req,res) =>{
 
 export const deletePatient = async(req,res) =>{
     try {
-        // eslint-disable-next-line no-unused-vars
         const {id} = req.params
+        //verificamos que exista el id del paciente 
+        const existPatient = await Patient.findByPk(id)
+
+        if(!existPatient) return res.status(404).json({message:"Patient not found"})
+
+        await existPatient.destroy()
+
+        res.status(200).json({message:"Patient deleted successfully"})
+
+
       } catch (error) {
          return res.status(500).json({message: "Internal error",error:error.message})
     }

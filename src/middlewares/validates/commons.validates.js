@@ -1,5 +1,6 @@
 import { body, param} from "express-validator"
 
+//name
 export const nameValidator = (field = "name") =>
   body(field)
     .trim()
@@ -7,21 +8,21 @@ export const nameValidator = (field = "name") =>
     .matches(/^[A-Za-zÀ-ÿ\u00f1\u00d1\s]+$/)
     .withMessage(`${field} must contain only letters`)
 
-// ✉️ Email
+// Email
 export const emailValidator = (field = "email") =>
   body(field)
     .notEmpty().withMessage(`${field} is required`)
     .isEmail().withMessage(`${field} must be a valid email`)
     .normalizeEmail()
 
-// ☎️ Teléfono
+// Teléfono
 export const phoneValidator = (field = "phone") =>
   body(field)
     .optional()
     .isLength({ min: 8, max: 15 }).withMessage(`${field} must be between 8 and 15 digits`)
     .matches(/^[0-9]+$/).withMessage(`${field} must contain only numbers`)
 
-// 🪪 Identificación
+// Identificación
 export const identificationValidator = (field = "identification") =>
   body(field)
     .notEmpty().withMessage(`${field} is required`)

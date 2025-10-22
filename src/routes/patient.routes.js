@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { createPatient, getAllFPatients, searchPatient,updatePatient } from "../controllers/patient.controllers.js"
-import { createPatientValidator } from "../middlewares/validate/patient.validate.js"
+import { createPatient, getAllFPatients, searchPatient,updatePatient, deletePatient } from "../controllers/patient.controllers.js"
+import { createPatientValidator } from "../middlewares/validates/patient.validates.js"
 import { validateResult } from "../middlewares/validateResult.middleware.js"
 import { keycloaki } from "../config/keycloak.config.js"
 
@@ -21,6 +21,10 @@ patientRouter.post("/",
     keycloaki.protect(),
     validateResult,
     updatePatient
+)
+.delete("/:id",
+    keycloaki.protect(),
+    deletePatient
 )
 patientsRouter.get("/",
     keycloaki.protect(),
