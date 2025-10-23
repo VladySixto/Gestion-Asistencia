@@ -1,33 +1,30 @@
 import { Router } from "express"
-import { createPatient, getAllFPatients, searchPatient,updatePatient, deletePatient } from "../controllers/patient.controllers.js"
-import { createPatientValidator } from "../middlewares/validates/patient.validates.js"
-import { validateResult } from "../middlewares/validateResult.middleware.js"
-import { keycloaki } from "../config/keycloak.config.js"
-
-export const patientRouter = Router()
-export const patientsRouter = Router()
-
-patientRouter.post("/",
-    keycloaki.protect(),
-    createPatientValidator,
-    validateResult,
-    createPatient
-)
-.get("/:id",
-    keycloaki.protect(),
-    searchPatient
-)
-.put("/:id",
-    keycloaki.protect(),
-    validateResult,
+import {
+    createPatient,
+    deletePatient,
+    getAllFPatients,
+    searchPatient,
     updatePatient
-)
-.delete("/:id",
-    keycloaki.protect(),
-    deletePatient
-)
-patientsRouter.get("/",
-    keycloaki.protect(),
-    getAllFPatients
+} from "../controllers/patient.controllers.js"
+import { createPatientValidator } from "../middlewares/validates/patient.validates.js"
+import { validateIntParam } from "../middlewares/validates/commons.validates.js"
+import { validateResult } from "../middlewares/validateResult.middleware.js"
+
+// diferentes instancias de router para la ruta Singular y Plural
+const patientRouter = Router() 
+const patientsRouter = Router() 
+
+patientsRouter.get("/", getAllFPatients)
+
+patientRouter.post(
+    "/",
+    createPatientValidator, 
+   validateResult, 
+    createPatient           
 )
 
+patientRouter.get("/:id", validateIntParam("id"),validateResult, searchPatient)
+patientRouter.put("/:id", validateIntParam("id"), createPatientValidator,validateResult, updatePatient)
+patientRouter.delete("/:id", validateIntParam("id"),validateResult, deletePatient)
+
+export { patientRouter, patientsRouter }

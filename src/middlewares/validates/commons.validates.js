@@ -59,6 +59,24 @@ export const validateEmail = ({ field, required = true }) => {
 }
 
 /**
+ * Validador para campos de número de teléfono en formato internacional.
+ * @param {object} options - Opciones de configuración.
+ * @param {string} options.field - El nombre del campo a validar.
+ * @param {boolean} [options.required=true] - Indica si el campo es obligatorio.
+ */
+export const validatePhone = ({ field, required = true }) => {
+  const validator = body(field).trim()
+
+  if (required) {
+    validator.notEmpty().withMessage(`El campo ${field} es requerido.`).bail()
+  } else {
+    validator.optional({ checkFalsy: true })
+  }
+
+  return validator
+    .matches(/^\+?[1-9]\d{7,14}$/).withMessage(`El campo ${field} debe ser un número de teléfono válido (ej: +5491122334455).`)
+}
+/**
  * Validador genérico para campos de identificación (DNI, Pasaporte, CUD).
  * Permite caracteres alfanuméricos para ser flexible.
  * @param {object} options - Opciones de configuración.

@@ -26,11 +26,12 @@ export const Patient = sequelize.define("Patient",{
     },
     phone: {
         type: DataTypes.STRING,
-        defaultValue: true
+        allowNull: true,
+        unique:true
     },
     identification: {
         type: DataTypes.STRING,
-        allowNull:  true,
+        allowNull:  false,
         unique:true
     },
     cud:{
@@ -38,6 +39,7 @@ export const Patient = sequelize.define("Patient",{
         allowNull: true,
         unique:true
     },
+    // si esta en 0 no tiene, si tiene 1 o mas marca la cantidad de personas a cargo de el.
     haveTutor:{
         type: DataTypes.INTEGER,
         allowNull: false,
