@@ -78,7 +78,7 @@ export const validateIdentification = ({ field, required = true, min = 6, max = 
 
   return validator
     .isLength({ min, max }).withMessage(`El campo ${field} debe tener entre ${min} y ${max} caracteres.`)
-    .isAlphanumeric('es-ES').withMessage(`El campo ${field} solo puede contener letras y números.`)
+    .isAlphanumeric("es-ES").withMessage(`El campo ${field} solo puede contener letras y números.`)
 }
 
 export const validateIntParam = (paramName) => [
