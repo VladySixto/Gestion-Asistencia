@@ -49,7 +49,7 @@ app.use(express.json())
 app.use("/api/v1", mainRouter)
 // Ruta pública
 app.get("/", (req, res) => {
-  res.send("🚀 Bienvenido a la app con Keycloak!")
+  res.send("🚀 Bienvenido al back del externo, agarra la pala lacra!!")
 })
 
 // Ruta protegida (requiere login)

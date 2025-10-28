@@ -1,16 +1,12 @@
 import { sequelize } from "../config/database/dbconfig.js"
 import dotenv from "dotenv"
 dotenv.config()
-//importaciones de modelos
-import { Patient } from "./patient.models.js"
-import { Tutor } from "./tutor.models.js"
-//import { Professional } from "./professional.models.js"
+
 
 
 // revisar relaciones
 export const initModels = () =>{
-    Patient.belongsToMany(Tutor, {through: "patient_tutor"})
-    Tutor.belongsToMany(Patient, {through: "patient_tutor"})
+
     
 }
 
