@@ -1,7 +1,9 @@
 import { Router } from "express"
-
+import testRouter from "./test.routes.js"
 
 const mainRouter = Router()
+
+mainRouter.use("/test", testRouter)
 
 /**
  * @openapi

@@ -49,7 +49,7 @@ app.use(express.json())
 app.use("/api/v1", mainRouter)
 // Ruta pública
 app.get("/", (req, res) => {
-  res.send("🚀 Bienvenido al back del externo, agarra la pala lacra!!")
+  res.send("🚀 Bienvenido al back del externo!!")
 })
 
 // Ruta protegida (requiere login)
