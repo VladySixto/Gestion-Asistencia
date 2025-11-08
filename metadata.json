@@ -1,0 +1,5 @@
+{
+  "name": "Gestión de asistencias",
+  "description": "A web application for managing student attendance, news, and user roles within an educational institute. It provides distinct interfaces for students, preceptors, and administrators.",
+  "requestFramePermissions": []
+}

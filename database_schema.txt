@@ -1,0 +1,105 @@
+# Modelo de Base de Datos SQL para la Aplicación de Gestión de Asistencias
+
+Este archivo contiene el script SQL para crear la estructura de la base de datos relacional que soporta la aplicación. El diseño está normalizado para garantizar la integridad de los datos, minimizar la redundancia y optimizar el rendimiento de las consultas.
+
+## Explicación del Modelo
+
+1.  **`users`**: Es la tabla central que contiene a todas las personas que interactúan con el sistema. El campo `role` es crucial para determinar los permisos y la interfaz que ve cada usuario.
+
+2.  **`courses`**: Representa las materias o cursos específicos (ej. "Redes de Datos - 5to A"). Contiene información clave como el límite de faltas permitidas.
+
+3.  **`student_courses`**: Es una "tabla de unión" (o tabla pivote) que resuelve la relación de "muchos a muchos" entre alumnos y cursos. Un alumno puede estar inscripto en varios cursos, y un curso tiene muchos alumnos. Esta es la forma estándar y más eficiente de modelar esta relación en una base de datos relacional.
+
+4.  **`attendance`**: Guarda un registro **únicamente** para las inasistencias (`absent`, `justified`, `late`). La presencia de un alumno se infiere por la **ausencia** de un registro en un día determinado para un curso específico. Este enfoque es muy eficiente en cuanto a almacenamiento, ya que no se guardan registros innecesarios para los días en que todos los alumnos están presentes. La clave única (`UNIQUE`) previene la inserción de datos duplicados.
+
+5.  **`news`**: Almacena las noticias o anuncios publicados en el tablón. Está vinculada al usuario que la creó a través de `author_id` para mantener la integridad referencial.
+
+6.  **Índices**: Se han añadido índices en columnas que se usarán frecuentemente para filtrar o ordenar datos (`date` en `attendance`, `role` en `users`), lo que acelera significativamente las consultas.
+
+---
+
+## Script SQL
+
+```sql
+-- -----------------------------------------------------
+-- Tabla `users`
+-- Almacena la información de todos los usuarios: administradores, preceptores y alumnos.
+-- -----------------------------------------------------
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  document VARCHAR(50) NOT NULL UNIQUE,
+  role ENUM('Admin', 'Preceptor', 'Student') NOT NULL,
+  course VARCHAR(100) COMMENT 'Descriptor del grupo general del alumno, ej: "5to Año A (Programación)"',
+  avatar_url VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- -----------------------------------------------------
+-- Tabla `courses`
+-- Define las materias o cursos específicos, con sus propiedades.
+-- -----------------------------------------------------
+CREATE TABLE courses (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL COMMENT 'Nombre completo y descriptivo, ej: Redes de Datos - 5to A',
+  subject VARCHAR(255) NOT NULL COMMENT 'Nombre de la materia, ej: Redes de Datos',
+  classroom VARCHAR(100),
+  schedule INT COMMENT 'Carga horaria semanal en horas',
+  max_absences INT NOT NULL DEFAULT 20 COMMENT 'Límite de faltas permitidas para este curso',
+  icon_url VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- -----------------------------------------------------
+-- Tabla `student_courses` (Tabla de Unión)
+-- Modela la relación muchos-a-muchos entre alumnos y cursos.
+-- -----------------------------------------------------
+CREATE TABLE student_courses (
+  student_id INT NOT NULL,
+  course_id INT NOT NULL,
+  PRIMARY KEY (student_id, course_id),
+  FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Tabla `attendance`
+-- Registra las inasistencias. La presencia se infiere por la ausencia de un registro.
+-- -----------------------------------------------------
+CREATE TABLE attendance (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  student_id INT NOT NULL,
+  course_id INT NOT NULL,
+  date DATE NOT NULL,
+  status ENUM('absent', 'justified', 'late') NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+  UNIQUE (student_id, course_id, date) -- Evita duplicados: un estado por alumno, por curso, por día.
+);
+
+-- -----------------------------------------------------
+-- Tabla `news`
+-- Almacena las noticias o anuncios publicados.
+-- -----------------------------------------------------
+CREATE TABLE news (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(255) NOT NULL,
+  content TEXT NOT NULL,
+  author_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE RESTRICT -- Evita borrar un usuario si tiene noticias
+);
+
+-- -----------------------------------------------------
+-- Índices para mejorar el rendimiento de las consultas
+-- -----------------------------------------------------
+CREATE INDEX idx_attendance_date ON attendance(date);
+CREATE INDEX idx_users_role ON users(role);
+CREATE INDEX idx_news_created_at ON news(created_at);
+
+```
