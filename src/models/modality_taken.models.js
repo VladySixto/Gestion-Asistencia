@@ -1,7 +1,7 @@
 import { sequelize } from "../config/database/dbconfig.js"
 import { DataTypes } from "sequelize"
 
-export const ModalityTaken = sequelize.define("ModalityTaken", {
+export const ModalityTaken = sequelize.define("Modality_Taken", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

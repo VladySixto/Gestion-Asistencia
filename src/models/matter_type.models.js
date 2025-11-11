@@ -1,7 +1,7 @@
 import { sequelize } from "../config/database/db.config.js"
 import { DataTypes } from "sequelize"
 
-export const matterType = sequelize.define("MatterType", {
+export const matterType = sequelize.define("Matter_Type", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

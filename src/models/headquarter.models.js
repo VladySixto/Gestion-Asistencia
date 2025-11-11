@@ -2,7 +2,7 @@ import { sequelize } from "../config/database/dbconfig"
 import { DataTypes } from "sequelize"
 
 // sede, crear relacion entre direccion y carrera
-export const Headquarters = sequelize.define("Headquarters", {
+export const Headquarters = sequelize.define("Headquarter", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
