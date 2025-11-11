@@ -1,4 +1,4 @@
-import { sequelize } from "../config/database/dbconfig"
+import { sequelize } from "../config/database/dbconfig.js"
 import { DataTypes } from "sequelize"
 
 // sede, crear relacion entre direccion y carrera

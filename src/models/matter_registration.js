@@ -1,4 +1,4 @@
-import {sequelize} from "../config/database/db.config.js"
+import {sequelize} from "../config/database/dbconfig.js"
 import {DataTypes} from "sequelize"
 
 export const MatterRegistration = sequelize.define("Matter_Registration", {

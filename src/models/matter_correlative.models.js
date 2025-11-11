@@ -1,4 +1,4 @@
-import {sequelize} from "../config/database/db.config.js"
+import {sequelize} from "../config/database/dbconfig.js"
 import {DataTypes} from "sequelize"
 
 // Por cada materia necesaria para cursar la materia x "Analisis 2", habra un registro en esta tabla intermedia relacionando la materia "Analisis 2" con otro id materia "Analisis 1"

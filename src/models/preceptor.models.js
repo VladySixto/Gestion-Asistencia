@@ -7,8 +7,4 @@ export const Preceptor = sequelize.define("Preceptor",{
         primaryKey: true,
         autoIncrement: true
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
 })

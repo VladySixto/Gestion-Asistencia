@@ -1,7 +1,7 @@
-import { Sequelize } from "../config/database/db.config.js"
+import { sequelize } from "../config/database/dbconfig.js"
 import { DataTypes } from "sequelize"
 
-export const CareerType = Sequelize.define("Career_Type",{
+export const CareerType = sequelize.define("Career_Type",{
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
