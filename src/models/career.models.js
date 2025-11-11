@@ -20,7 +20,7 @@ export const Career = sequelize.define("Careers",{
         allowNull: false
     },
     //para poner una url al plan academico.
-    academic_academic:{
+    academic_plan:{
         type: DataTypes.STRING(255),
         allowNull: false
     },
