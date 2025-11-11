@@ -1,7 +1,7 @@
-import {sequalize} from "../config/database/db.config.js"
+import {sequelize} from "../config/database/dbconfig.js"
 import {DataTypes} from "sequelize"
 
-export const Matter = sequalize.define("Matter", {
+export const Matter = sequelize.define("Matter", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
