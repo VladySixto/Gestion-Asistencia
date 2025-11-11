@@ -28,5 +28,6 @@ export const MatterRegistration = sequelize.define("Matter_Registration", {
         allowNull: false,
         defaultValue: false
     },
+    indexes: [{ unique: true, fields: ["student_id", "matter_id"] }]
 
 })
