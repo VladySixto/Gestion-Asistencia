@@ -24,7 +24,6 @@ export const MatterRegistration = sequelize.define("Matter_Registration", {
         }
     },
     //tipo de estado de materia para saber si esta aprobada, desaprobada
-
     type_state_matter: {
         type: DataTypes.ENUM("Aprobada", "Reprobada", "Pendiente", "Cursando"),
         allowNull: false,
