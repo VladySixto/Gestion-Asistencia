@@ -30,10 +30,9 @@ export const MatterRegistration = sequelize.define("Matter_Registration", {
         defaultValue: "Pendiente"
     },
     verification_state: {
-        type: DataTypes.TINYINT,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
-    },
-    indexes: [{ unique: true, fields: ["student_id", "matter_id"] }]
+    }
 
 })

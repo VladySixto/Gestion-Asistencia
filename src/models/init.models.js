@@ -6,7 +6,7 @@ import { Career } from "./career.models.js"
 import { CareerType } from "./career_type.models.js"
 import { Headquarters } from "./headquarter.models.js"
 import { Matter } from "./matter.models.js"
-import { MatterCorrelative } from "./matter_correlative.models.js"
+
 import { MatterRegistration } from "./matter_registration.js"
 import { matterType } from "./matter_type.models.js"
 import { ModalityTaken } from "./modality_taken.models.js"
@@ -55,12 +55,6 @@ export const initModels = () => {
   Matter.belongsTo(SubCategoryMatter, { foreignKey: "sub_category_matter_id" })
   SubCategoryMatter.hasMany(Matter, { foreignKey: "sub_category_matter_id" })
 
-  Matter.belongsToMany(Matter, {
-    through: MatterCorrelative,
-    as: "Prerequisites",
-    foreignKey: "matter_id",
-    otherKey: "prerequisite_id",
-  })
 
   Matter.hasMany(Schedule, { foreignKey: "matter_id" })
   Schedule.belongsTo(Matter, { foreignKey: "matter_id" })

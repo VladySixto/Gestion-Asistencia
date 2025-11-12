@@ -8,14 +8,6 @@ export const Schedule = sequelize.define("Schedule", {
         primaryKey: true,
         autoIncrement: true
     },
-    matter_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: "Matter",
-            key: "id"
-        }
-    },
     day_of_week: {
        type: DataTypes.ENUM("Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"),
        allowNull: false

@@ -30,8 +30,6 @@ export const MatterCorrelative = sequelize.define("Matter_Correlative", {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true
-    },
-    //duplicados
-    indexes: [{ unique: true, fields: ["matter_id", "prerequisite_id"] }]
+    }
 
 })

@@ -7,14 +7,6 @@ export const StudentAttendance = sequelize.define("Student_Attendance", {
         primaryKey: true,
         autoIncrement: true
     },
-    student_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: "Student",
-            key: "id"
-        }
-    },
     hour:{
         type: DataTypes.TIME,
         allowNull: false
