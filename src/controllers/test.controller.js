@@ -11,6 +11,35 @@ export const createTest = async (req, res) => {
   }
 }
 
+export const getTests = async (req, res) => {
+  try {
+    // page = número de página actual
+    // limit = cantidad de registros por página
+    let { page = 1, limit = 10 } = req.query
+
+    page = parseInt(page)
+    limit = parseInt(limit)
+
+    const offset = (page - 1) * limit
+
+    const { count, rows } = await Test.findAndCountAll({
+      limit,
+      offset,
+      order: [["id", "ASC"]], // opcional
+    })
+
+    return res.json({
+      totalItems: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+      data: rows,
+    })
+
+  } catch (error) {
+    return handleError(500,res, error)
+  }
+}
+
 export const getallTest = async(req,res) =>{
   try {
     const getall = await Test.findAll()
