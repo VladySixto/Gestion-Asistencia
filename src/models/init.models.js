@@ -16,6 +16,7 @@ import { Schedule } from "./schedule.models.js"
 import { MatterRegistration } from "./matter_registration.js"
 import { ModalityTaken } from "./modality_taken.models.js"
 import { StudentAttendance } from "./student_attendance.models.js"
+import { MatterCorrelative } from "./matter_correlative.models.js"
 
 dotenv.config()
 
@@ -75,7 +76,6 @@ export const initModels = () => {
   // Preceptor relationships
   Preceptor.belongsToMany(Career, { through: "PreceptorCareers" })
   Career.belongsToMany(Preceptor, { through: "PreceptorCareers" })
-
 }
 
 export const initDb = async () => {
