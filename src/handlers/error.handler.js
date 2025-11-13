@@ -1,5 +1,5 @@
-export const handleError = (res, error, message = "Internal error") => {
-    // Here we can add our monitoring logic in the future
+export const handleError = (coderes,res, error, message = "Internal error") => {
     console.error(error)
-    return res.status(500).json({ message, error: error.message })
+    //devuelve el que se pasa por parametro o 500 si es nulo
+    return res.status(toNumber(coderes) || 500).json({ message, error: error.message })
 }
