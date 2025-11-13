@@ -1,6 +1,7 @@
 import { Router } from "express"
 import testRouter from "./test.routes.js"
 import { matterTypeRouters , matterTypeRouter } from "../routes/matter_type.routes.js"
+import { subCategoryMatterRouter, subCategoryMatterRouters } from "./sub_category_matter.routes.js"
 const mainRouter = Router() 
 
 mainRouter.use("/test", testRouter)
@@ -31,3 +32,9 @@ mainRouter.use("/mattertype", matterTypeRouter)
 mainRouter.use("/mattertypes", matterTypeRouters)
 
 export default mainRouter
+
+
+//rutas de sub caegoria de materias 
+
+mainRouter.use("/subCategoryMatter", subCategoryMatterRouter)
+mainRouter.use("/subCategoryMatters", subCategoryMatterRouters)

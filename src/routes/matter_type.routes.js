@@ -7,3 +7,9 @@ export const matterTypeRouters = Router()
 matterTypeRouter.post("/", createMatterType)
 
 matterTypeRouters.get("/",getMatterTypes) 
+
+matterTypeRouter.get("/:id", getMatterTypeById)
+
+matterTypeRouter.put("/:id", updateMatterType)
+
+matterTypeRouter.delete("/:id", deleteMatterType)

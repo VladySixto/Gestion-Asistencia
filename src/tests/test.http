@@ -1,0 +1,7 @@
+### Ejemplo POST
+POST http://localhost:3001/api/v1/test
+Content-Type: application/json
+
+{
+  "name": "Mi primer test"
+}
