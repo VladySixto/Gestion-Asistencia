@@ -1,14 +1,14 @@
-import { matterType } from "../models/matter_type.models"
+import { matterType } from "../models/matter_type.models.js"
 import { handleError } from "../handlers/error.handler.js"
 
-// export const getMatterTypes = async (req, res) => {
-//     try {
-//     const matterTypes = await matterType.findAll();
-//     res.status(200).json(matterTypes);
-//     } catch (error) {
-//     return handleError(500,res, error);
-//     }
-// }
+export const getMatterTypes = async (req, res) => {
+    try {
+    const matterTypes = await matterType.findAll()
+    res.status(200).json(matterTypes)
+    } catch (error) {
+    return handleError(500,res, error)
+    }
+}
 
 export const createMatterType = async (req, res) => {
     try {

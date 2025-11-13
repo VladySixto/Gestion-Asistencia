@@ -1,7 +1,7 @@
 import { Router } from "express"
 import testRouter from "./test.routes.js"
-
-const mainRouter = Router()
+import { matterTypeRouters , matterTypeRouter } from "../routes/matter_type.routes.js"
+const mainRouter = Router() 
 
 mainRouter.use("/test", testRouter)
 
@@ -27,6 +27,7 @@ mainRouter.get("/ping", (req, res) => {
   res.status(200).json({ message: "pong" })
 })
 
-
+mainRouter.use("/mattertype", matterTypeRouter)
+mainRouter.use("/mattertypes", matterTypeRouters)
 
 export default mainRouter
