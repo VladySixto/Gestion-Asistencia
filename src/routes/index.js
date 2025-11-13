@@ -31,6 +31,9 @@ mainRouter.get("/ping", (req, res) => {
 mainRouter.use("/mattertype", matterTypeRouter)
 mainRouter.use("/mattertypes", matterTypeRouters)
 
+mainRouter.use("/careertype", careerTypeRouter)
+mainRouter.use("/careertypes", careerTypeRouters)
+
 export default mainRouter
 
 
