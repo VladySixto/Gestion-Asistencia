@@ -1,6 +1,7 @@
 import { Router } from "express"
 import testRouter from "./test.routes.js"
 import { matterTypeRouters , matterTypeRouter } from "../routes/matter_type.routes.js"
+import { careerTypeRouter, careerTypeRouters } from "./career_type.routes.js"
 const mainRouter = Router() 
 
 mainRouter.use("/test", testRouter)
@@ -29,5 +30,8 @@ mainRouter.get("/ping", (req, res) => {
 
 mainRouter.use("/mattertype", matterTypeRouter)
 mainRouter.use("/mattertypes", matterTypeRouters)
+
+mainRouter.use("/careertype", careerTypeRouter)
+mainRouter.use("/careertypes", careerTypeRouters)
 
 export default mainRouter
