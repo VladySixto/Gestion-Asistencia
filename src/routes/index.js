@@ -1,6 +1,7 @@
 import { Router } from "express"
 import testRouter from "./test.routes.js"
 import { matterTypeRouters , matterTypeRouter } from "../routes/matter_type.routes.js"
+import { careerTypeRouter, careerTypeRouters } from "./career_type.routes.js"
 import { subCategoryMatterRouter, subCategoryMatterRouters } from "./sub_category_matter.routes.js"
 const mainRouter = Router() 
 
