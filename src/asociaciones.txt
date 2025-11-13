@@ -1,0 +1,11 @@
+*   **User-Address:** Uno a uno.
+*   **User-Student/Preceptor:** Uno a uno.
+*   **Career-CareerType/CareerCategory:** Uno a muchos.
+*   **Career-Headquarters:** Muchos a muchos.
+*   **Headquarters-Address:** Uno a uno.
+*   **Matter-Career/matterType/SubCategoryMatter:** Uno a muchos.
+*   **MatterCorrelative (Tabla Intermedia):** Auto-referencia de muchos a muchos en `Matter` para prerrequisitos.
+*   **Matter-Schedule:** Uno a muchos.
+*   **MatterRegistration (Tabla Intermedia):** Muchos a muchos entre `Student` y `Matter`, con relación a `ModalityTaken`.
+*   **StudentAttendance-Student/Schedule:** Uno a muchos.
+*   **Preceptor-Career:** Muchos a muchos.
