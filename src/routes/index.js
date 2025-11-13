@@ -29,16 +29,16 @@ mainRouter.get("/ping", (req, res) => {
   res.status(200).json({ message: "pong" })
 })
 
-mainRouter.use("/mattertype", matterTypeRouter)
-mainRouter.use("/mattertypes", matterTypeRouters)
+mainRouter.use("/matter-type", matterTypeRouter)
+mainRouter.use("/matter-types", matterTypeRouters)
 
-mainRouter.use("/careertype", careerTypeRouter)
-mainRouter.use("/careertypes", careerTypeRouters)
+mainRouter.use("/career-type", careerTypeRouter)
+mainRouter.use("/career-types", careerTypeRouters)
 
 export default mainRouter
 
 
 //rutas de sub caegoria de materias 
 
-mainRouter.use("/subCategoryMatter", subCategoryMatterRouter)
-mainRouter.use("/subCategoryMatters", subCategoryMatterRouters)
+mainRouter.use("/sub-category-matter", subCategoryMatterRouter)
+mainRouter.use("/sub-category-matters", subCategoryMatterRouters)
