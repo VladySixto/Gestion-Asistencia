@@ -8,24 +8,6 @@ export const MatterCorrelative = sequelize.define("Matter_Correlative", {
         primaryKey: true,
         autoIncrement: true
     },
-    //materia que se va a cursar
-    matter_id:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: "Matter",
-            key: "id"
-        }
-    },
-    //materia aprobada necesaria para cursar siguente materia.
-    prerequisite_id:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: "Matter",
-            key: "id"
-        }
-    },
     available: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
