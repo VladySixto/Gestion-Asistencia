@@ -11,7 +11,7 @@ import {
 export const subCategoryMatterRouter = Router()
 export const subCategoryMatterRouters = Router()
 
-subCategoryMatterRouters.get('/', getAllSubCategoriesMatter)
+subCategoryMatterRouters.get("/", getAllSubCategoriesMatter)
 
 /**
  * @swagger

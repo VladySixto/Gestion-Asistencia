@@ -86,7 +86,7 @@ export const deleteCareerType = async (req, res) => {
 
     //Validaicones Si existe el id y esta disponible
     const existIdCareerType = await CareerType.findByPk(id, { where: { available: true } })
-    if (existIdCareerType) return res.status(404).json({ message: "CareerType not found or not available" })
+    if (!existIdCareerType) return res.status(404).json({ message: "CareerType not found or not available" })
 
     //pasamos a true
     if (existIdCareerType) await existIdCareerType.update({ available: false })

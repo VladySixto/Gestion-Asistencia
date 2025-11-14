@@ -42,3 +42,8 @@ export default mainRouter
 
 mainRouter.use("/sub-category-matter", subCategoryMatterRouter)
 mainRouter.use("/sub-category-matters", subCategoryMatterRouters)
+
+//rutas de modalidad de la cursada
+
+mainRouter.use("/modality-taken", modalityTakenRouter)
+mainRouter.use("/modality-takens", modalityTakenRouters)
