@@ -1,4 +1,4 @@
-import { ModalityTaken } from "../models/modality_taken.models"
+import { ModalityTaken } from "../models/modality_taken.models.js"
 import { handleError } from "../handlers/error.handler.js"
 
 export const getModalityTaken = async (req, res) => {

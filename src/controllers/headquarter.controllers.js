@@ -1,6 +1,6 @@
 import { Op } from "sequelize"
-import { Headquarters } from "../models/headquarter.models"
-import { handleError } from "../handlers/error.handler"
+import { Headquarters } from "../models/headquarter.models.js"
+import { handleError } from "../handlers/error.handler.js"
 
 export const getHeadquarters = async (req, res) => {
     try {

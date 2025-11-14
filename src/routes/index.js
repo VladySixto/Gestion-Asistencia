@@ -39,9 +39,6 @@ mainRouter.use("/matter-types", matterTypeRouters)
 mainRouter.use("/career-type", careerTypeRouter)
 mainRouter.use("/career-types", careerTypeRouters)
 
-export default mainRouter
-
-
 //rutas de sub caegoria de materias 
 
 mainRouter.use("/sub-category-matter", subCategoryMatterRouter)
@@ -56,3 +53,5 @@ mainRouter.use("/modality-takens", modalityTakenRouters)
 
 mainRouter.use("/headquarter", headquartersRouter)
 mainRouter.use("/headquarters", headquartersRouters)
+
+export default mainRouter

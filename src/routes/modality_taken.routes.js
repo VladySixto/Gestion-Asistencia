@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getModalityTaken, getAllModalityTaken, createModalityTaken, updateModalityTaken, deleteModalityTaken } from "../controllers/modality_taken.controllers"
+import { getModalityTaken, getAllModalityTaken, createModalityTaken, updateModalityTaken, deleteModalityTaken } from "../controllers/modality_taken.controllers.js"
 
 export const modalityTakenRouter = Router()
 export const modalityTakenRouters = Router()
